@@ -1,258 +1,76 @@
-# Specification Document
+# GitLab Analytics Dashboard
 
-Please fill out this document to reflect your team's project. This is a living document and will need to be updated regularly. You may also remove any section to its own document (e.g. a separate standards and conventions document), however you must keep the header and provide a link to that other document under the header.
+This repository is maintained by CS/ECE 506 Team 29. This specification is a living document and should be updated as requirements are confirmed with the course customer.
 
-Also, be sure to check out the Wiki for information on how to maintain your team's requirements.
+## Project Abstract
 
-## TeamName
+The project is a GitLab analytics dashboard for GitLab project members and developers. Its purpose is to make important project activity understandable without requiring a user to search through individual GitLab pages or raw API responses. The exact dashboard capabilities and presentation remain subject to customer clarification.
 
-<!--The name of your team.-->
+## Customer
 
-### Project Abstract
+The course customer and the intended user population beyond GitLab project members/developers have not yet been recorded in the repository.
 
-<!--A one paragraph summary of what the software will do.-->
+**TODO (Product Owner):** Confirm the course customer, intended users, and the project activity that is most important for the dashboard to present.
 
-This is an example paragraph written in markdown. You can use *italics*, **bold**, and other formatting options. You can also <u>use inline html</u> to format your text. The example sections included in this document are not necessarily all the sections you will want, and it is possible that you won't use all the one's provided. It is your responsibility to create a document that adequately conveys all the information about your project specifications and requirements.
+## Product Story
 
-Please view this file's source to see `<!--comments-->` with guidance on how you might use the different sections of this document. 
+> As a GitLab project member or developer, I want a dashboard view of important project activity so that I can understand the project without manually searching GitLab pages or API responses.
 
-### Customer
+Existing backlog notes identify the following as candidate areas, not yet confirmed requirements:
 
-<!--A brief description of the customer for this software, both in general (the population who might eventually use such a system) and specifically for this document (the customer(s) who informed this document). Every project will have a customer from the CS506 instructional staff. Requirements should not be derived simply from discussion among team members. Ideally your customer should not only talk to you about requirements but also be excited later in the semester to use the system.-->
+- merge request activity and review/merge times;
+- CI/CD and test results;
+- issue and requirement history;
+- contribution activity from project members; and
+- development trends or bottlenecks.
 
-### Specification
+### Acceptance Criteria Status
 
-<!--A detailed specification of the system. UML, or other diagrams, such as finite automata, or other appropriate specification formalisms, are encouraged over natural language.-->
+The product story is not ready for implementation until the Product Owner confirms with the customer:
 
-<!--Include sections, for example, illustrating the database architecture (with, for example, an ERD).-->
+- which candidate activity areas are in scope and their priority;
+- what GitLab project(s) and data sources the dashboard may access;
+- how users select or identify a project;
+- what calculations or definitions apply to any displayed analytics; and
+- what evidence will allow each selected capability to be accepted.
 
-<!--Included below are some sample diagrams, including some example tech stack diagrams.-->
+Until those questions are answered, candidate areas must not be treated as approved requirements.
 
-#### Technology Stack
+## Sprint 0 Goal
 
-Here are some sample technology stacks that you can use for inspiration:
+Create a reviewable foundation for later development by maintaining the backlog, recording confirmed constraints, identifying unresolved product questions, and planning a minimal front-end-to-back-end-to-database walking skeleton. Sprint 0 does not select an unrecorded framework or claim that dashboard functionality has been implemented.
 
-```mermaid
-flowchart RL
-subgraph Front End
-	A(Javascript: React)
-end
-	
-subgraph Back End
-	B(Python: Django with \nDjango Rest Framework)
-end
-	
-subgraph Database
-	C[(MySQL)]
-end
+## Requirements and Backlog Traceability
 
-A <-->|"REST API"| B
-B <-->|Django ORM| C
-```
+| Source | Recorded statement | Repository evidence / next step |
+| --- | --- | --- |
+| REQ-1 | The team will maintain a backlog. | The GitLab Sprint 0 issue board is the current backlog. Product questions above still need customer clarification. |
+| REQ-2 | The system will use a MySQL database. | Reflected as a confirmed constraint in [SKELETON.md](SKELETON.md). |
+| REQ-3 | The database will be hosted on the team's CSL VM. | Reflected as a confirmed constraint in [SKELETON.md](SKELETON.md). |
+| [Work item #8](https://git.doit.wisc.edu/cdis/cs/courses/cs506/fa2026/team/T29/Project_29/-/work_items/8) | Identify the primary user role and clarify the user's dashboard need. | Primary role and product story are documented above; capability scope and acceptance evidence remain open. |
+| [Work item #9](https://git.doit.wisc.edu/cdis/cs/courses/cs506/fa2026/team/T29/Project_29/-/work_items/9) | Plan the walking skeleton. | The integration plan and unresolved technical decisions are documented in [SKELETON.md](SKELETON.md). |
 
-```mermaid
-flowchart RL
-subgraph Front End
-	A(Javascript: Vue)
-end
-	
-subgraph Back End
-	B(Python: Flask)
-end
-	
-subgraph Database
-	C[(MySQL)]
-end
+## Specification
 
-A <-->|"REST API"| B
-B <-->|SQLAlchemy| C
-```
+### Confirmed Constraints
 
-```mermaid
-flowchart RL
-subgraph Front End
-	A(Javascript: Vue)
-end
-	
-subgraph Back End
-	B(Javascript: Express)
-end
-	
-subgraph Database
-	C[(MySQL)]
-end
+- The product direction is a GitLab analytics dashboard.
+- The primary role currently recorded is a GitLab project member/developer.
+- The system will use MySQL.
+- The database will be hosted on the team's CSL VM.
 
-A <-->|"REST API"| B
-B <--> C
-```
+### Open Specification Questions
 
-```mermaid
-flowchart RL
-subgraph Front End
-	A(Static JS, CSS, HTML)
-end
-	
-subgraph Back End
-	B(Java: SpringBoot)
-end
-	
-subgraph Database
-	C[(MySQL)]
-end
+- Which dashboard capability should be implemented first?
+- Which GitLab data may the application access, and how will access be authorized?
+- Which front-end and back-end technologies are approved?
+- What data must be stored rather than requested from GitLab when needed?
+- What customer-approved acceptance criteria apply to the first capability?
 
-A <-->|HTTP| B
-B <--> C
-```
+### Technology Stack
 
-```mermaid
-flowchart RL
-subgraph Front End
-	A(Mobile App)
-end
-	
-subgraph Back End
-	B(Python: Django)
-end
-	
-subgraph Database
-	C[(MySQL)]
-end
+Only MySQL and the CSL VM database location are currently recorded as decisions. Front-end, back-end, integration, and deployment choices remain TODOs; see [SKELETON.md](SKELETON.md).
 
-A <-->|REST API| B
-B <-->|Django ORM| C
-```
+## Standards & Conventions
 
-
-
-#### Database
-
-```mermaid
----
-title: Sample Database ERD for an Order System
----
-erDiagram
-    Customer ||--o{ Order : "placed by"
-    Order ||--o{ OrderItem : "contains"
-    Product ||--o{ OrderItem : "included in"
-
-    Customer {
-        int customer_id PK
-        string name
-        string email
-        string phone
-    }
-
-    Order {
-        int order_id PK
-        int customer_id FK
-        string order_date
-        string status
-    }
-
-    Product {
-        int product_id PK
-        string name
-        string description
-        decimal price
-    }
-
-    OrderItem {
-        int order_item_id PK
-        int order_id FK
-        int product_id FK
-        int quantity
-    }
-```
-
-#### Class Diagram
-
-```mermaid
----
-title: Sample Class Diagram for Animal Program
----
-classDiagram
-    class Animal {
-        - String name
-        + Animal(String name)
-        + void setName(String name)
-        + String getName()
-        + void makeSound()
-    }
-    class Dog {
-        + Dog(String name)
-        + void makeSound()
-    }
-    class Cat {
-        + Cat(String name)
-        + void makeSound()
-    }
-    class Bird {
-        + Bird(String name)
-        + void makeSound()
-    }
-    Animal <|-- Dog
-    Animal <|-- Cat
-    Animal <|-- Bird
-```
-
-#### Flowchart
-
-```mermaid
----
-title: Sample Program Flowchart
----
-graph TD;
-    Start([Start]) --> Input_Data[/Input Data/];
-    Input_Data --> Process_Data[Process Data];
-    Process_Data --> Validate_Data{Validate Data};
-    Validate_Data -->|Valid| Process_Valid_Data[Process Valid Data];
-    Validate_Data -->|Invalid| Error_Message[/Error Message/];
-    Process_Valid_Data --> Analyze_Data[Analyze Data];
-    Analyze_Data --> Generate_Output[Generate Output];
-    Generate_Output --> Display_Output[/Display Output/];
-    Display_Output --> End([End]);
-    Error_Message --> End;
-```
-
-#### Behavior
-
-```mermaid
----
-title: Sample State Diagram For Coffee Application
----
-stateDiagram
-    [*] --> Ready
-    Ready --> Brewing : Start Brewing
-    Brewing --> Ready : Brew Complete
-    Brewing --> WaterLowError : Water Low
-    WaterLowError --> Ready : Refill Water
-    Brewing --> BeansLowError : Beans Low
-    BeansLowError --> Ready : Refill Beans
-```
-
-#### Sequence Diagram
-
-```mermaid
-sequenceDiagram
-
-participant ReactFrontend
-participant DjangoBackend
-participant MySQLDatabase
-
-ReactFrontend ->> DjangoBackend: HTTP Request (e.g., GET /api/data)
-activate DjangoBackend
-
-DjangoBackend ->> MySQLDatabase: Query (e.g., SELECT * FROM data_table)
-activate MySQLDatabase
-
-MySQLDatabase -->> DjangoBackend: Result Set
-deactivate MySQLDatabase
-
-DjangoBackend -->> ReactFrontend: JSON Response
-deactivate DjangoBackend
-```
-
-### Standards & Conventions
-
-<!--This is a link to a seperate coding conventions document / style guide-->
 [Style Guide & Conventions](STYLE.md)
