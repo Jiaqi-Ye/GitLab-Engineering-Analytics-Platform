@@ -1,69 +1,126 @@
 # GitLab Analytics Dashboard
 
-This repository is maintained by CS/ECE 506 Team 29. This specification is a living document and should be updated as requirements are confirmed with the course customer.
+This repository is maintained by CS/ECE 506 Team 29. This specification is a living document and should be updated as product decisions and customer feedback evolve.
 
 ## Project Abstract
 
-The project is a GitLab analytics dashboard for GitLab project members and developers. Its purpose is to make important project activity understandable without requiring a user to search through individual GitLab pages or raw API responses. The exact dashboard capabilities and presentation remain subject to customer clarification.
+The product is a GitLab analytics dashboard that helps project members quickly understand important project activity without manually inspecting many GitLab pages or raw API responses.
 
-## Customer
+## Product Owner Decisions
 
-The course customer and the intended user population beyond GitLab project members/developers have not yet been recorded in the repository.
+The following decisions establish the initial product direction and backlog order. They are Product Owner decisions for planning purposes and are not claims of customer approval.
 
-**TODO (Product Owner):** Confirm the course customer, intended users, and the project activity that is most important for the dashboard to present.
+### Product Goal
 
-## Product Story
+Help GitLab project members quickly understand important project activity through a focused analytics dashboard.
 
-> As a GitLab project member or developer, I want a dashboard view of important project activity so that I can understand the project without manually searching GitLab pages or API responses.
+### Primary User
 
-## Primary User
+The initial primary user is a GitLab project member or developer. This role is also recorded in [work item #8](https://git.doit.wisc.edu/cdis/cs/courses/cs506/fa2026/team/T29/Project_29/-/work_items/8).
 
-The primary user currently recorded in work item #8 is a GitLab project member or developer. Other intended users have not yet been confirmed with the course customer.
+### Initial Product Capabilities and Backlog Priority
 
-## Candidate Ideas and Approved Requirements
+| Backlog order | Capability | Priority |
+| --- | --- | --- |
+| 1 | Merge request review and merge time analytics | Priority 1 |
+| 2 | CI/CD and test result trends | Priority 1 |
+| 3 | Issue and requirement history | Priority 2 |
+| 4 | Contributor activity analysis | Priority 2 |
+| 5 | Additional development trend or bottleneck insights | Lower priority / later |
 
-Existing backlog notes identify the following as candidate areas, not yet confirmed requirements:
+This ordering identifies what the team should refine first. It does not state that the customer has approved every capability.
 
-- merge request activity and review/merge times;
-- CI/CD and test results;
-- issue and requirement history;
-- contribution activity from project members; and
-- development trends or bottlenecks.
+### Sprint 0 Product Goal
 
-### Acceptance Criteria Status
+Create a clear, reviewable product foundation by:
 
-The product story is not ready for implementation until the Product Owner confirms with the customer:
+- defining the initial product direction;
+- organizing and prioritizing the backlog;
+- documenting initial user stories;
+- preparing product-level acceptance criteria;
+- documenting remaining customer questions; and
+- distinguishing Product Owner decisions from unresolved technical decisions.
 
-- which candidate activity areas are in scope and their priority;
-- what GitLab project(s) and data sources the dashboard may access;
-- how users select or identify a project;
-- what calculations or definitions apply to any displayed analytics; and
-- what evidence will allow each selected capability to be accepted.
+## Initial User Stories and Acceptance Criteria
 
-Until those questions are answered, candidate areas must not be treated as approved requirements.
+These stories translate the ordered backlog into product outcomes. Metric definitions and customer-specific expectations still require validation as noted below.
 
-## Sprint 0 Goal
+### Story 1: Merge Request Analytics
 
-Create a reviewable product foundation for later development by maintaining the backlog, recording existing requirements, clarifying the primary user and product story, and identifying questions that require customer input. This PO goal does not claim implementation, architecture, or technology-selection work.
+> As a GitLab project member, I want to view merge request review and merge times so that I can identify review bottlenecks.
+
+Acceptance criteria:
+
+- The dashboard clearly displays review-time and merge-time information for the selected GitLab project.
+- The meaning of each displayed metric is documented.
+- Empty or unavailable merge request data is handled without presenting a misleading result.
+- The user can identify which GitLab project and data period the result represents.
+- The displayed result can be traced back to its GitLab source data.
+
+### Story 2: CI/CD and Test Trends
+
+> As a GitLab project member, I want to see CI/CD and test result trends so that I can quickly understand project stability.
+
+Acceptance criteria:
+
+- The dashboard clearly displays CI/CD and test result trends for the selected GitLab project.
+- The meaning of each displayed trend or status is documented.
+- Empty or unavailable pipeline or test data is handled without presenting a misleading result.
+- The user can identify which GitLab project and data period the result represents.
+- The displayed result can be traced back to its GitLab source data.
+
+### Story 3: Issue and Requirement History
+
+> As a GitLab project member, I want to view issue and requirement history so that I can understand how project scope changes over time.
+
+Acceptance criteria:
+
+- The dashboard presents issue and requirement history for the selected GitLab project in a clear order.
+- The types of changes included in the history are documented.
+- Empty or unavailable history is communicated clearly.
+- The user can identify which GitLab project and data period the history represents.
+- Displayed history items can be traced back to their GitLab source data.
+
+### Story 4: Contributor Activity
+
+> As a GitLab project member, I want to view contributor activity so that I can understand participation across the project.
+
+Acceptance criteria:
+
+- The dashboard clearly presents contributor activity for the selected GitLab project.
+- The activities included in the analysis are documented.
+- Empty or unavailable contributor data is communicated clearly.
+- The user can identify which GitLab project and data period the result represents.
+- The displayed result can be traced back to its GitLab source data.
+
+## Customer Clarification Still Needed
+
+The Product Owner has established the initial direction above. Customer or stakeholder input is still needed to clarify:
+
+- whether intended user groups extend beyond GitLab project members or developers;
+- which metrics or capabilities the customer considers most valuable;
+- whether the customer has specific acceptance expectations for the initial stories; and
+- whether there are restrictions on which GitLab data the product may access.
+
+Customer feedback may change the backlog order or acceptance criteria. Until that feedback is recorded, the priorities above remain the Product Owner's initial planning decisions rather than customer-approved requirements.
+
+## Technical and Architecture Decisions Not Yet Made
+
+This Product Owner contribution does not select or claim a technical implementation. The following remain outside its scope:
+
+- **TODO:** Add the approved technology stack after a team/TA decision.
+- **TODO:** Add an architecture diagram after the technical design is approved.
+- **TODO:** Document approved GitLab integration and authorization details.
+- **TODO:** Document approved data-storage and deployment design.
 
 ## Requirements and Backlog Traceability
 
-| Source | Recorded statement | Repository evidence / next step |
+| Source | Recorded statement | Relationship to this specification |
 | --- | --- | --- |
-| REQ-1 | The team will maintain a backlog. | The GitLab Sprint 0 issue board is the current backlog. Product questions above still need customer clarification. |
-| REQ-2 | The system will use a MySQL database. | Recorded in the GitLab requirements tracker; implementation details are outside this PO contribution. |
-| REQ-3 | The database will be hosted on the team's CSL VM. | Recorded in the GitLab requirements tracker; architecture and deployment work are outside this PO contribution. |
-| [Work item #8](https://git.doit.wisc.edu/cdis/cs/courses/cs506/fa2026/team/T29/Project_29/-/work_items/8) | Identify the primary user role and clarify the user's dashboard need. | Primary role and product story are documented above; capability scope and acceptance evidence remain open. |
-| [Work item #9](https://git.doit.wisc.edu/cdis/cs/courses/cs506/fa2026/team/T29/Project_29/-/work_items/9) | Plan the walking skeleton. | Tracked separately; its technical planning and implementation are not claimed as PO work in this contribution. |
-
-## Customer Clarification Questions
-
-- Which candidate dashboard capability is in scope and highest priority?
-- Who is the course customer, and are there intended users beyond GitLab project members/developers?
-- Which GitLab data may the application access, and how will access be authorized?
-- How should a user select or identify a GitLab project?
-- How should each selected analytic be defined?
-- What customer-approved acceptance criteria apply to the first capability?
+| REQ-1 | The team will maintain a backlog. | The ordered capability list above records the initial PO backlog priority. |
+| REQ-2 | The system will use a MySQL database. | Existing recorded requirement; implementation and database design are outside this PO contribution. |
+| REQ-3 | The database will be hosted on the team's CSL VM. | Existing recorded requirement; architecture and deployment are outside this PO contribution. |
+| [Work item #8](https://git.doit.wisc.edu/cdis/cs/courses/cs506/fa2026/team/T29/Project_29/-/work_items/8) | Identify the primary user role and clarify the user's dashboard need. | Supports the primary user, product goal, and initial user stories above. |
 
 ## Standards & Conventions
 
