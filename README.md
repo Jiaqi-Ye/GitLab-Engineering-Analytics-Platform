@@ -16,6 +16,12 @@ The course customer and the intended user population beyond GitLab project membe
 
 > As a GitLab project member or developer, I want a dashboard view of important project activity so that I can understand the project without manually searching GitLab pages or API responses.
 
+## Primary User
+
+The primary user currently recorded in work item #8 is a GitLab project member or developer. Other intended users have not yet been confirmed with the course customer.
+
+## Candidate Ideas and Approved Requirements
+
 Existing backlog notes identify the following as candidate areas, not yet confirmed requirements:
 
 - merge request activity and review/merge times;
@@ -38,38 +44,26 @@ Until those questions are answered, candidate areas must not be treated as appro
 
 ## Sprint 0 Goal
 
-Create a reviewable foundation for later development by maintaining the backlog, recording confirmed constraints, identifying unresolved product questions, and planning a minimal front-end-to-back-end-to-database walking skeleton. Sprint 0 does not select an unrecorded framework or claim that dashboard functionality has been implemented.
+Create a reviewable product foundation for later development by maintaining the backlog, recording existing requirements, clarifying the primary user and product story, and identifying questions that require customer input. This PO goal does not claim implementation, architecture, or technology-selection work.
 
 ## Requirements and Backlog Traceability
 
 | Source | Recorded statement | Repository evidence / next step |
 | --- | --- | --- |
 | REQ-1 | The team will maintain a backlog. | The GitLab Sprint 0 issue board is the current backlog. Product questions above still need customer clarification. |
-| REQ-2 | The system will use a MySQL database. | Reflected as a confirmed constraint in [SKELETON.md](SKELETON.md). |
-| REQ-3 | The database will be hosted on the team's CSL VM. | Reflected as a confirmed constraint in [SKELETON.md](SKELETON.md). |
+| REQ-2 | The system will use a MySQL database. | Recorded in the GitLab requirements tracker; implementation details are outside this PO contribution. |
+| REQ-3 | The database will be hosted on the team's CSL VM. | Recorded in the GitLab requirements tracker; architecture and deployment work are outside this PO contribution. |
 | [Work item #8](https://git.doit.wisc.edu/cdis/cs/courses/cs506/fa2026/team/T29/Project_29/-/work_items/8) | Identify the primary user role and clarify the user's dashboard need. | Primary role and product story are documented above; capability scope and acceptance evidence remain open. |
-| [Work item #9](https://git.doit.wisc.edu/cdis/cs/courses/cs506/fa2026/team/T29/Project_29/-/work_items/9) | Plan the walking skeleton. | The integration plan and unresolved technical decisions are documented in [SKELETON.md](SKELETON.md). |
+| [Work item #9](https://git.doit.wisc.edu/cdis/cs/courses/cs506/fa2026/team/T29/Project_29/-/work_items/9) | Plan the walking skeleton. | Tracked separately; its technical planning and implementation are not claimed as PO work in this contribution. |
 
-## Specification
+## Customer Clarification Questions
 
-### Confirmed Constraints
-
-- The product direction is a GitLab analytics dashboard.
-- The primary role currently recorded is a GitLab project member/developer.
-- The system will use MySQL.
-- The database will be hosted on the team's CSL VM.
-
-### Open Specification Questions
-
-- Which dashboard capability should be implemented first?
+- Which candidate dashboard capability is in scope and highest priority?
+- Who is the course customer, and are there intended users beyond GitLab project members/developers?
 - Which GitLab data may the application access, and how will access be authorized?
-- Which front-end and back-end technologies are approved?
-- What data must be stored rather than requested from GitLab when needed?
+- How should a user select or identify a GitLab project?
+- How should each selected analytic be defined?
 - What customer-approved acceptance criteria apply to the first capability?
-
-### Technology Stack
-
-Only MySQL and the CSL VM database location are currently recorded as decisions. Front-end, back-end, integration, and deployment choices remain TODOs; see [SKELETON.md](SKELETON.md).
 
 ## Standards & Conventions
 
