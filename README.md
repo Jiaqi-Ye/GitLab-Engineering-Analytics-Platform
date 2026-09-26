@@ -1,258 +1,127 @@
-# Specification Document
+# GitLab Analytics Dashboard
 
-Please fill out this document to reflect your team's project. This is a living document and will need to be updated regularly. You may also remove any section to its own document (e.g. a separate standards and conventions document), however you must keep the header and provide a link to that other document under the header.
+This repository is maintained by CS/ECE 506 Team 29. This specification is a living document and should be updated as product decisions and customer feedback evolve.
 
-Also, be sure to check out the Wiki for information on how to maintain your team's requirements.
+## Project Abstract
 
-## TeamName
+The product is a GitLab analytics dashboard that helps project members quickly understand important project activity without manually inspecting many GitLab pages or raw API responses.
 
-<!--The name of your team.-->
+## Product Owner Decisions
 
-### Project Abstract
+The following decisions establish the initial product direction and backlog order. They are Product Owner decisions for planning purposes and are not claims of customer approval.
 
-<!--A one paragraph summary of what the software will do.-->
+### Product Goal
 
-This is an example paragraph written in markdown. You can use *italics*, **bold**, and other formatting options. You can also <u>use inline html</u> to format your text. The example sections included in this document are not necessarily all the sections you will want, and it is possible that you won't use all the one's provided. It is your responsibility to create a document that adequately conveys all the information about your project specifications and requirements.
+Help GitLab project members quickly understand important project activity through a focused analytics dashboard.
 
-Please view this file's source to see `<!--comments-->` with guidance on how you might use the different sections of this document. 
+### Primary User
 
-### Customer
+The initial primary user is a GitLab project member or developer. This role is also recorded in [work item #8](https://git.doit.wisc.edu/cdis/cs/courses/cs506/fa2026/team/T29/Project_29/-/work_items/8).
 
-<!--A brief description of the customer for this software, both in general (the population who might eventually use such a system) and specifically for this document (the customer(s) who informed this document). Every project will have a customer from the CS506 instructional staff. Requirements should not be derived simply from discussion among team members. Ideally your customer should not only talk to you about requirements but also be excited later in the semester to use the system.-->
+### Initial Product Capabilities and Backlog Priority
 
-### Specification
+| Backlog order | Capability | Priority |
+| --- | --- | --- |
+| 1 | Merge request review and merge time analytics | Priority 1 |
+| 2 | CI/CD and test result trends | Priority 1 |
+| 3 | Issue and requirement history | Priority 2 |
+| 4 | Contributor activity analysis | Priority 2 |
+| 5 | Additional development trend or bottleneck insights | Lower priority / later |
 
-<!--A detailed specification of the system. UML, or other diagrams, such as finite automata, or other appropriate specification formalisms, are encouraged over natural language.-->
+This ordering identifies what the team should refine first. It does not state that the customer has approved every capability.
 
-<!--Include sections, for example, illustrating the database architecture (with, for example, an ERD).-->
+### Sprint 0 Product Goal
 
-<!--Included below are some sample diagrams, including some example tech stack diagrams.-->
+Create a clear, reviewable product foundation by:
 
-#### Technology Stack
+- defining the initial product direction;
+- organizing and prioritizing the backlog;
+- documenting initial user stories;
+- preparing product-level acceptance criteria;
+- documenting remaining customer questions; and
+- distinguishing Product Owner decisions from unresolved technical decisions.
 
-Here are some sample technology stacks that you can use for inspiration:
+## Initial User Stories and Acceptance Criteria
 
-```mermaid
-flowchart RL
-subgraph Front End
-	A(Javascript: React)
-end
-	
-subgraph Back End
-	B(Python: Django with \nDjango Rest Framework)
-end
-	
-subgraph Database
-	C[(MySQL)]
-end
+These stories translate the ordered backlog into product outcomes. Metric definitions and customer-specific expectations still require validation as noted below.
 
-A <-->|"REST API"| B
-B <-->|Django ORM| C
-```
+### Story 1: Merge Request Analytics
 
-```mermaid
-flowchart RL
-subgraph Front End
-	A(Javascript: Vue)
-end
-	
-subgraph Back End
-	B(Python: Flask)
-end
-	
-subgraph Database
-	C[(MySQL)]
-end
+> As a GitLab project member, I want to view merge request review and merge times so that I can identify review bottlenecks.
 
-A <-->|"REST API"| B
-B <-->|SQLAlchemy| C
-```
+Acceptance criteria:
 
-```mermaid
-flowchart RL
-subgraph Front End
-	A(Javascript: Vue)
-end
-	
-subgraph Back End
-	B(Javascript: Express)
-end
-	
-subgraph Database
-	C[(MySQL)]
-end
+- The dashboard clearly displays review-time and merge-time information for the selected GitLab project.
+- The meaning of each displayed metric is documented.
+- Empty or unavailable merge request data is handled without presenting a misleading result.
+- The user can identify which GitLab project and data period the result represents.
+- The displayed result can be traced back to its GitLab source data.
 
-A <-->|"REST API"| B
-B <--> C
-```
+### Story 2: CI/CD and Test Trends
 
-```mermaid
-flowchart RL
-subgraph Front End
-	A(Static JS, CSS, HTML)
-end
-	
-subgraph Back End
-	B(Java: SpringBoot)
-end
-	
-subgraph Database
-	C[(MySQL)]
-end
+> As a GitLab project member, I want to see CI/CD and test result trends so that I can quickly understand project stability.
 
-A <-->|HTTP| B
-B <--> C
-```
+Acceptance criteria:
 
-```mermaid
-flowchart RL
-subgraph Front End
-	A(Mobile App)
-end
-	
-subgraph Back End
-	B(Python: Django)
-end
-	
-subgraph Database
-	C[(MySQL)]
-end
+- The dashboard clearly displays CI/CD and test result trends for the selected GitLab project.
+- The meaning of each displayed trend or status is documented.
+- Empty or unavailable pipeline or test data is handled without presenting a misleading result.
+- The user can identify which GitLab project and data period the result represents.
+- The displayed result can be traced back to its GitLab source data.
 
-A <-->|REST API| B
-B <-->|Django ORM| C
-```
+### Story 3: Issue and Requirement History
 
+> As a GitLab project member, I want to view issue and requirement history so that I can understand how project scope changes over time.
 
+Acceptance criteria:
 
-#### Database
+- The dashboard presents issue and requirement history for the selected GitLab project in a clear order.
+- The types of changes included in the history are documented.
+- Empty or unavailable history is communicated clearly.
+- The user can identify which GitLab project and data period the history represents.
+- Displayed history items can be traced back to their GitLab source data.
 
-```mermaid
----
-title: Sample Database ERD for an Order System
----
-erDiagram
-    Customer ||--o{ Order : "placed by"
-    Order ||--o{ OrderItem : "contains"
-    Product ||--o{ OrderItem : "included in"
+### Story 4: Contributor Activity
 
-    Customer {
-        int customer_id PK
-        string name
-        string email
-        string phone
-    }
+> As a GitLab project member, I want to view contributor activity so that I can understand participation across the project.
 
-    Order {
-        int order_id PK
-        int customer_id FK
-        string order_date
-        string status
-    }
+Acceptance criteria:
 
-    Product {
-        int product_id PK
-        string name
-        string description
-        decimal price
-    }
+- The dashboard clearly presents contributor activity for the selected GitLab project.
+- The activities included in the analysis are documented.
+- Empty or unavailable contributor data is communicated clearly.
+- The user can identify which GitLab project and data period the result represents.
+- The displayed result can be traced back to its GitLab source data.
 
-    OrderItem {
-        int order_item_id PK
-        int order_id FK
-        int product_id FK
-        int quantity
-    }
-```
+## Customer Clarification Still Needed
 
-#### Class Diagram
+The Product Owner has established the initial direction above. Customer or stakeholder input is still needed to clarify:
 
-```mermaid
----
-title: Sample Class Diagram for Animal Program
----
-classDiagram
-    class Animal {
-        - String name
-        + Animal(String name)
-        + void setName(String name)
-        + String getName()
-        + void makeSound()
-    }
-    class Dog {
-        + Dog(String name)
-        + void makeSound()
-    }
-    class Cat {
-        + Cat(String name)
-        + void makeSound()
-    }
-    class Bird {
-        + Bird(String name)
-        + void makeSound()
-    }
-    Animal <|-- Dog
-    Animal <|-- Cat
-    Animal <|-- Bird
-```
+- whether intended user groups extend beyond GitLab project members or developers;
+- which metrics or capabilities the customer considers most valuable;
+- whether the customer has specific acceptance expectations for the initial stories; and
+- whether there are restrictions on which GitLab data the product may access.
 
-#### Flowchart
+Customer feedback may change the backlog order or acceptance criteria. Until that feedback is recorded, the priorities above remain the Product Owner's initial planning decisions rather than customer-approved requirements.
 
-```mermaid
----
-title: Sample Program Flowchart
----
-graph TD;
-    Start([Start]) --> Input_Data[/Input Data/];
-    Input_Data --> Process_Data[Process Data];
-    Process_Data --> Validate_Data{Validate Data};
-    Validate_Data -->|Valid| Process_Valid_Data[Process Valid Data];
-    Validate_Data -->|Invalid| Error_Message[/Error Message/];
-    Process_Valid_Data --> Analyze_Data[Analyze Data];
-    Analyze_Data --> Generate_Output[Generate Output];
-    Generate_Output --> Display_Output[/Display Output/];
-    Display_Output --> End([End]);
-    Error_Message --> End;
-```
+## Technical and Architecture Decisions Not Yet Made
 
-#### Behavior
+This Product Owner contribution does not select or claim a technical implementation. The following remain outside its scope:
 
-```mermaid
----
-title: Sample State Diagram For Coffee Application
----
-stateDiagram
-    [*] --> Ready
-    Ready --> Brewing : Start Brewing
-    Brewing --> Ready : Brew Complete
-    Brewing --> WaterLowError : Water Low
-    WaterLowError --> Ready : Refill Water
-    Brewing --> BeansLowError : Beans Low
-    BeansLowError --> Ready : Refill Beans
-```
+- **TODO:** Add the approved technology stack after a team/TA decision.
+- **TODO:** Add an architecture diagram after the technical design is approved.
+- **TODO:** Document approved GitLab integration and authorization details.
+- **TODO:** Document approved data-storage and deployment design.
 
-#### Sequence Diagram
+## Requirements and Backlog Traceability
 
-```mermaid
-sequenceDiagram
+| Source | Recorded statement | Relationship to this specification |
+| --- | --- | --- |
+| REQ-1 | The team will maintain a backlog. | The ordered capability list above records the initial PO backlog priority. |
+| REQ-2 | The system will use a MySQL database. | Existing recorded requirement; implementation and database design are outside this PO contribution. |
+| REQ-3 | The database will be hosted on the team's CSL VM. | Existing recorded requirement; architecture and deployment are outside this PO contribution. |
+| [Work item #8](https://git.doit.wisc.edu/cdis/cs/courses/cs506/fa2026/team/T29/Project_29/-/work_items/8) | Identify the primary user role and clarify the user's dashboard need. | Supports the primary user, product goal, and initial user stories above. |
 
-participant ReactFrontend
-participant DjangoBackend
-participant MySQLDatabase
+## Standards & Conventions
 
-ReactFrontend ->> DjangoBackend: HTTP Request (e.g., GET /api/data)
-activate DjangoBackend
-
-DjangoBackend ->> MySQLDatabase: Query (e.g., SELECT * FROM data_table)
-activate MySQLDatabase
-
-MySQLDatabase -->> DjangoBackend: Result Set
-deactivate MySQLDatabase
-
-DjangoBackend -->> ReactFrontend: JSON Response
-deactivate DjangoBackend
-```
-
-### Standards & Conventions
-
-<!--This is a link to a seperate coding conventions document / style guide-->
 [Style Guide & Conventions](STYLE.md)
