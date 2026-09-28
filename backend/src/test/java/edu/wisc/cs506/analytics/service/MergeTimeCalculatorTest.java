@@ -34,6 +34,16 @@ class MergeTimeCalculatorTest {
     }
 
     @Test
+    void roundsExactDecimalHalfEvenWithoutBinaryFloatArtifacts() {
+        var records = mapper.readTree("""
+                [{"iid":18,"title":"Decimal rounding boundary","created_at":"2026-09-23T10:00:00Z",
+                  "merged_at":"2026-09-23T12:40:30Z","web_url":null}]
+                """);
+        // 9,630 seconds is exactly 2.675 hours; decimal HALF_EVEN gives 2.68.
+        assertEquals(new BigDecimal("2.68"), calculator.calculate(records).get(0).mergeTimeHours());
+    }
+
+    @Test
     void rejectsMissingTimezoneAndNegativeDuration() {
         for (String created : List.of("2026-09-23T10:00:00", "2026-09-23T12:00:00Z")) {
             var records = mapper.readTree("""

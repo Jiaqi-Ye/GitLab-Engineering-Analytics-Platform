@@ -44,6 +44,7 @@ public class MergeTimeCalculator {
             if (duration.isNegative()) {
                 throw invalidData();
             }
+            // Decimal HALF_EVEN avoids binary-float rounding artifacts (2.675h becomes 2.68h).
             BigDecimal hours = BigDecimal.valueOf(duration.getSeconds())
                     .add(BigDecimal.valueOf(duration.getNano(), 9))
                     .divide(BigDecimal.valueOf(3600), 2, RoundingMode.HALF_EVEN);
