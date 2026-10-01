@@ -4,3 +4,5 @@ Developing a full-stack GitLab analytics platform with backend API integration a
 All Rights Reserved.
 This repository is provided for portfolio and educational viewing purposes only.
 No permission is granted to copy, modify, distribute, sublicense, or use the code for commercial or academic purposes without prior written permission.
+
+The main development repository is currently private on GitLab. A public version will be available soon.
