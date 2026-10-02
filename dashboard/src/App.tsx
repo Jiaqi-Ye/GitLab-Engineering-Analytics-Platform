@@ -14,6 +14,13 @@ function hours(value: number | null): string {
   return value === null ? '—' : numberFormat.format(value);
 }
 
+function median(values: number[]): number | null {
+  if (values.length === 0) return null;
+  const ordered = [...values].sort((a, b) => a - b);
+  const midpoint = Math.floor(ordered.length / 2);
+  return ordered.length % 2 === 0 ? (ordered[midpoint - 1] + ordered[midpoint]) / 2 : ordered[midpoint];
+}
+
 function MergeIcon({ small = false }: { small?: boolean }) {
   return <svg width={small ? 18 : 22} height={small ? 18 : 22} viewBox="0 0 24 24" fill="none" aria-hidden="true">
     <circle cx="6" cy="5" r="2.5" stroke="currentColor" strokeWidth="1.8" />
@@ -51,6 +58,22 @@ function Metric({ label, value, note, featured = false }: {
     <p className="metric-value">{hours(value)}{label !== 'Merged requests' && value !== null ? <span>hrs</span> : null}</p>
     <p className="metric-note">{note}</p>
   </article>;
+}
+
+function SnapshotHighlights({ requests }: { requests: MergeRequest[] }) {
+  const middle = median(requests.map(request => request.mergeTimeHours));
+  const withinDay = requests.filter(request => request.mergeTimeHours <= 24).length;
+  const earliest = requests.reduce((value, request) => request.createdAt < value ? request.createdAt : value, requests[0].createdAt);
+  const latest = requests.reduce((value, request) => request.mergedAt > value ? request.mergedAt : value, requests[0].mergedAt);
+
+  return <section className="snapshot-highlights" aria-labelledby="snapshot-heading">
+    <div className="snapshot-intro"><p className="eyebrow">SNAPSHOT HIGHLIGHTS</p><h2 id="snapshot-heading">A quick read on delivery pace</h2></div>
+    <dl>
+      <div><dt>Median merge time</dt><dd>{hours(middle)} <span>hrs</span></dd><p>Less affected by outliers</p></div>
+      <div><dt>Merged within 24 hours</dt><dd>{withinDay}<span> / {requests.length}</span></dd><p>{numberFormat.format(withinDay / requests.length * 100)}% of this snapshot</p></div>
+      <div><dt>Included date range</dt><dd className="date-range">{dateFormat.format(new Date(earliest))}<span> to </span>{dateFormat.format(new Date(latest))}</dd><p>UTC timestamps</p></div>
+    </dl>
+  </section>;
 }
 
 function RequestChart({ requests }: { requests: MergeRequest[] }) {
@@ -136,6 +159,7 @@ function Dashboard({ data }: { data: Analytics }) {
       <Metric label="Slowest merge" value={data.summary.slowestMergeTimeHours} note="Longest elapsed time" />
     </section>
     {requests.length > 0 ? <>
+      <SnapshotHighlights requests={requests} />
       <div className="analysis-layout"><RequestChart requests={requests} /><aside id="about-metric" className="reading-note" aria-labelledby="reading-heading">
         <span className="note-icon" aria-hidden="true">↗</span><p className="eyebrow">READING THIS METRIC</p><h2 id="reading-heading">Every merge has a timeline.</h2>
         <p>Time to merge measures the full elapsed time between opening a request and merging it.</p>
