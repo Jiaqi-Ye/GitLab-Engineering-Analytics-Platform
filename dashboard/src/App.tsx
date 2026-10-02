@@ -224,7 +224,7 @@ export default function App() {
     </header>
     <nav className="product-nav" aria-label="Product navigation">
       <div className="product-nav-content">
-        <a className="product-nav-active" href="#overview">Project overview</a>
+        <a className="product-nav-active" href="#overview" aria-current="page">Project overview</a>
         <a href="#trends">Analytics</a>
         <a href="#requests">Merge requests</a>
         <a href="#about-metric">Documentation</a>
@@ -234,7 +234,7 @@ export default function App() {
       <aside className="sidebar" aria-label="Analytics sections">
         <p className="sidebar-title">Project analytics</p>
         <nav>
-          <a className="sidebar-active" href="#overview"><span>Overview</span><ChevronIcon /></a>
+          <a className="sidebar-active" href="#overview" aria-current="page"><span>Overview</span><ChevronIcon /></a>
           <a href="#trends"><span>Merge time</span><ChevronIcon /></a>
           <a href="#requests"><span>Merged requests</span><ChevronIcon /></a>
         </nav>
@@ -250,13 +250,13 @@ export default function App() {
       </aside>
       <main id="main" className="page">
         <nav className="breadcrumbs" aria-label="Breadcrumb">
-          <a href="#overview">T29</a><span>/</span><a href="#trends">Analytics</a><span>/</span><strong>Merge requests</strong>
+          <a href="#overview">T29</a><span>/</span><a href="#trends">Analytics</a><span>/</span><strong aria-current="page">Merge requests</strong>
         </nav>
         <div className="page-heading"><div><p className="eyebrow">MERGE REQUEST ANALYTICS</p><h1>Time to merge</h1><p className="subtitle">Understand how long work moves from creation to merge, spot outliers, and follow delivery pace.</p></div>
-          <button className="refresh-button" onClick={() => void load(Boolean(data))} disabled={busy}><span className={busy ? 'spinning' : ''}><RefreshIcon /></span>{busy ? (data ? 'Refreshing…' : 'Loading…') : data?.source === 'demo' ? 'Refresh demo data' : 'Refresh GitLab data'}</button>
+          <button type="button" className="refresh-button" onClick={() => void load(Boolean(data))} disabled={busy}><span className={busy ? 'spinning' : ''}><RefreshIcon /></span>{busy ? (data ? 'Refreshing…' : 'Loading…') : data?.source === 'demo' ? 'Refresh demo data' : 'Refresh GitLab data'}</button>
         </div>
         <div className="live-notice" role="status" aria-live="polite">{notice}</div>
-        {error ? <div className="error-message" role="alert"><div><strong>{data ? 'Refresh failed' : 'Unable to load analytics'}</strong><p>{error}</p>{data ? <p>Your last loaded snapshot is still shown below.</p> : null}</div><button className="retry-button" disabled={busy} onClick={() => void load(Boolean(data))}>Try again</button></div> : null}
+        {error ? <div className="error-message" role="alert"><div><strong>{data ? 'Refresh failed' : 'Unable to load analytics'}</strong><p>{error}</p>{data ? <p>Your last loaded snapshot is still shown below.</p> : null}</div><button type="button" className="retry-button" disabled={busy} onClick={() => void load(Boolean(data))}>Try again</button></div> : null}
         {data ? <Dashboard data={data} /> : busy ? <section className="panel loading-state" role="status"><span className="loading-dot" /><h2>Loading project analytics</h2><p>Fetching the latest saved snapshot from the analytics service…</p></section> : null}
         <footer className="page-footer"><span>T29 / GitLab Analytics</span><span>Student project · creation-to-merge · UTC timestamps</span></footer>
       </main>

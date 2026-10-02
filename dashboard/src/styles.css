@@ -50,6 +50,8 @@ button { transition: background-color .15s ease, border-color .15s ease, transfo
 .course-label span { padding: 0 5px; color: #aaa8ae; }
 
 .product-nav { height: 48px; border-bottom: 1px solid var(--line); background: #fff; }
+.product-nav { scrollbar-width: none; }
+.product-nav::-webkit-scrollbar { display: none; }
 .product-nav-content { max-width: 1536px; height: 100%; margin: auto; padding: 0 32px; display: flex; align-items: stretch; gap: 29px; }
 .product-nav a { display: flex; align-items: center; position: relative; font-size: 13px; color: #55535b; }
 .product-nav a:hover { color: #17161b; text-decoration: none; }
