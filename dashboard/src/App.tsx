@@ -29,6 +29,20 @@ function RefreshIcon() {
   </svg>;
 }
 
+function GitLabMark() {
+  return <svg className="gitlab-mark" viewBox="0 0 36 36" role="img" aria-label="GitLab">
+    <path fill="#e24329" d="m18 32.1 6.6-20.3H11.4L18 32.1Z" />
+    <path fill="#fc6d26" d="m18 32.1-13-9.5 6.4-10.8L18 32.1Zm0 0 13-9.5-6.4-10.8L18 32.1Z" />
+    <path fill="#fca326" d="M5 22.6 2.8 16a1.1 1.1 0 0 1 0-.7L6.5 4.1c.2-.6 1-.6 1.2 0l3.7 7.7L5 22.6Zm26 0 2.2-6.6a1.1 1.1 0 0 0 0-.7L29.5 4.1c-.2-.6-1-.6-1.2 0l-3.7 7.7L31 22.6Z" />
+  </svg>;
+}
+
+function ChevronIcon() {
+  return <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path d="m9 6 6 6-6 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>;
+}
+
 function Metric({ label, value, note, featured = false }: {
   label: string; value: number | null; note: string; featured?: boolean;
 }) {
@@ -42,7 +56,7 @@ function Metric({ label, value, note, featured = false }: {
 function RequestChart({ requests }: { requests: MergeRequest[] }) {
   const recent = requests.slice(0, 12);
   const maximum = Math.max(1, ...recent.map(request => request.mergeTimeHours));
-  return <section className="panel chart-panel" aria-labelledby="chart-heading">
+  return <section id="trends" className="panel chart-panel" aria-labelledby="chart-heading">
     <div className="section-heading">
       <div><p className="eyebrow">FROM OPEN TO MERGED</p><h2 id="chart-heading">Time per merge request</h2></div>
       <span className="quiet-tag">Hours</span>
@@ -64,7 +78,7 @@ function RequestTable({ requests, source }: { requests: MergeRequest[]; source: 
   const needle = query.trim().toLowerCase();
   const filtered = requests.filter(request => `${request.iid} ${request.title}`.toLowerCase().includes(needle));
 
-  return <section className="panel table-panel" aria-labelledby="table-heading">
+  return <section id="requests" className="panel table-panel" aria-labelledby="table-heading">
     <div className="section-heading table-heading">
       <div><h2 id="table-heading">Merged requests <span className="count-badge">{requests.length}</span></h2>
         <p className="section-description">Creation and merge timestamps are shown in UTC.</p>
@@ -104,7 +118,7 @@ function Dashboard({ data }: { data: Analytics }) {
   const projectHref = webLink(data.project.url);
 
   return <>
-    <section className="project-context" aria-label="Project and data source">
+    <section id="overview" className="project-context" aria-label="Project and data source">
       <div className="project-name"><span className="project-avatar" aria-hidden="true"><MergeIcon /></span><div>
         <span className="context-label">PROJECT</span>
         {projectHref ? <a href={projectHref} target="_blank" rel="noreferrer">{data.project.name} <span aria-hidden="true">↗</span><span className="sr-only"> (opens GitLab in a new tab)</span></a> : <strong>{data.project.name}</strong>}
@@ -122,7 +136,7 @@ function Dashboard({ data }: { data: Analytics }) {
       <Metric label="Slowest merge" value={data.summary.slowestMergeTimeHours} note="Longest elapsed time" />
     </section>
     {requests.length > 0 ? <>
-      <div className="analysis-layout"><RequestChart requests={requests} /><aside className="reading-note" aria-labelledby="reading-heading">
+      <div className="analysis-layout"><RequestChart requests={requests} /><aside id="about-metric" className="reading-note" aria-labelledby="reading-heading">
         <span className="note-icon" aria-hidden="true">↗</span><p className="eyebrow">READING THIS METRIC</p><h2 id="reading-heading">Every merge has a timeline.</h2>
         <p>Time to merge measures the full elapsed time between opening a request and merging it.</p>
         <div className="formula"><span>Created</span><span aria-hidden="true">→</span><span>Merged</span></div>
@@ -167,17 +181,66 @@ export default function App() {
     return () => requestRef.current?.abort();
   }, []);
 
-  return <>
+  return <div className="app-shell">
     <a className="skip-link" href="#main">Skip to analytics</a>
-    <header className="topbar"><div className="topbar-content"><div className="brand"><span className="brand-mark">T29</span><span>GitLab <strong>Analytics</strong></span></div><span className="course-label">UW–Madison <span>·</span> CS 506</span></div></header>
-    <main id="main" className="page">
-      <div className="page-heading"><div><p className="eyebrow">PROJECT INSIGHTS / MERGE REQUESTS</p><h1>Time to merge<span>.</span></h1><p className="subtitle">Elapsed time from creation to merge. Review duration is a separate metric.</p></div>
-        <button className="refresh-button" onClick={() => void load(Boolean(data))} disabled={busy}><span className={busy ? 'spinning' : ''}><RefreshIcon /></span>{busy ? (data ? 'Refreshing…' : 'Loading…') : data?.source === 'demo' ? 'Refresh demo data' : 'Refresh GitLab data'}</button>
+    <header className="topbar">
+      <div className="topbar-content">
+        <a className="brand" href="#overview" aria-label="T29 GitLab Analytics home">
+          <GitLabMark />
+          <span>GitLab <strong>Analytics</strong></span>
+          <span className="brand-divider" aria-hidden="true" />
+          <span className="team-mark">T29</span>
+        </a>
+        <nav className="utility-nav" aria-label="Utility navigation">
+          <a href="#requests">Merge requests</a>
+          <a href="#about-metric">Metric guide</a>
+          <span className="course-label">UW–Madison <span>·</span> CS 506</span>
+        </nav>
       </div>
-      <div className="live-notice" role="status" aria-live="polite">{notice}</div>
-      {error ? <div className="error-message" role="alert"><div><strong>{data ? 'Refresh failed' : 'Unable to load analytics'}</strong><p>{error}</p>{data ? <p>Your last loaded snapshot is still shown below.</p> : null}</div><button className="retry-button" disabled={busy} onClick={() => void load(Boolean(data))}>Try again</button></div> : null}
-      {data ? <Dashboard data={data} /> : busy ? <section className="panel loading-state" role="status"><span className="loading-dot" /><h2>Loading project analytics</h2><p>Fetching the latest saved snapshot from the analytics service…</p></section> : null}
-      <footer className="page-footer"><span>T29 / GitLab Analytics</span><span>Creation-to-merge · elapsed hours · UTC timestamps</span></footer>
-    </main>
-  </>;
+    </header>
+    <nav className="product-nav" aria-label="Product navigation">
+      <div className="product-nav-content">
+        <a className="product-nav-active" href="#overview">Project overview</a>
+        <a href="#trends">Analytics</a>
+        <a href="#requests">Merge requests</a>
+        <a href="#about-metric">Documentation</a>
+      </div>
+    </nav>
+    <div className="workspace">
+      <aside className="sidebar" aria-label="Analytics sections">
+        <p className="sidebar-title">Project analytics</p>
+        <nav>
+          <a className="sidebar-active" href="#overview"><span>Overview</span><ChevronIcon /></a>
+          <a href="#trends"><span>Merge time</span><ChevronIcon /></a>
+          <a href="#requests"><span>Merged requests</span><ChevronIcon /></a>
+        </nav>
+        <div className="sidebar-group">
+          <p>Explore</p>
+          <span className="sidebar-muted">CI / CD trends <small>Coming soon</small></span>
+          <span className="sidebar-muted">Contributor activity <small>Coming soon</small></span>
+        </div>
+        <div className="sidebar-brand">
+          <span className="team-mark team-mark-large">T29</span>
+          <div><strong>Team 29</strong><span>CS 506 project</span></div>
+        </div>
+      </aside>
+      <main id="main" className="page">
+        <nav className="breadcrumbs" aria-label="Breadcrumb">
+          <a href="#overview">T29</a><span>/</span><a href="#trends">Analytics</a><span>/</span><strong>Merge requests</strong>
+        </nav>
+        <div className="page-heading"><div><p className="eyebrow">MERGE REQUEST ANALYTICS</p><h1>Time to merge</h1><p className="subtitle">Understand how long work moves from creation to merge, spot outliers, and follow delivery pace.</p></div>
+          <button className="refresh-button" onClick={() => void load(Boolean(data))} disabled={busy}><span className={busy ? 'spinning' : ''}><RefreshIcon /></span>{busy ? (data ? 'Refreshing…' : 'Loading…') : data?.source === 'demo' ? 'Refresh demo data' : 'Refresh GitLab data'}</button>
+        </div>
+        <div className="live-notice" role="status" aria-live="polite">{notice}</div>
+        {error ? <div className="error-message" role="alert"><div><strong>{data ? 'Refresh failed' : 'Unable to load analytics'}</strong><p>{error}</p>{data ? <p>Your last loaded snapshot is still shown below.</p> : null}</div><button className="retry-button" disabled={busy} onClick={() => void load(Boolean(data))}>Try again</button></div> : null}
+        {data ? <Dashboard data={data} /> : busy ? <section className="panel loading-state" role="status"><span className="loading-dot" /><h2>Loading project analytics</h2><p>Fetching the latest saved snapshot from the analytics service…</p></section> : null}
+        <footer className="page-footer"><span>T29 / GitLab Analytics</span><span>Student project · creation-to-merge · UTC timestamps</span></footer>
+      </main>
+      <aside className="on-this-page" aria-label="On this page">
+        <p>On this page</p>
+        <nav><a href="#overview">Project snapshot</a><a href="#trends">Time per request</a><a href="#about-metric">About this metric</a><a href="#requests">Merged requests</a></nav>
+        <div className="palette-card" aria-label="GitLab inspired palette"><span className="swatch orange" /><span className="swatch red" /><span className="swatch yellow" /><span className="swatch purple" /><p>GitLab-inspired palette</p></div>
+      </aside>
+    </div>
+  </div>;
 }
