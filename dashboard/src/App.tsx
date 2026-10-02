@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import teamLogo from '../../logo.png';
 import { fetchAnalytics, webLink, type Analytics, type MergeRequest } from './api';
 
 const numberFormat = new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 });
@@ -213,7 +214,7 @@ export default function App() {
           <GitLabMark />
           <span>GitLab <strong>Analytics</strong></span>
           <span className="brand-divider" aria-hidden="true" />
-          <span className="team-mark">T29</span>
+          <img className="team-mark" src={teamLogo} alt="" />
         </a>
         <nav className="utility-nav" aria-label="Utility navigation">
           <a href="#requests">Merge requests</a>
@@ -244,7 +245,7 @@ export default function App() {
           <span className="sidebar-muted">Contributor activity <small>Coming soon</small></span>
         </div>
         <div className="sidebar-brand">
-          <span className="team-mark team-mark-large">T29</span>
+          <img className="team-mark team-mark-large" src={teamLogo} alt="Team 29 logo" />
           <div><strong>Team 29</strong><span>CS 506 project</span></div>
         </div>
       </aside>
