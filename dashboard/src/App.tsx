@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import teamLogo from '../../logo.png';
+import teamLogo from './logo.png';
 import { fetchAnalytics, webLink, type Analytics, type MergeRequest } from './api';
 
 const numberFormat = new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 });
