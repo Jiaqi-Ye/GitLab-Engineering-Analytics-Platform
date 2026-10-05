@@ -1,0 +1,25 @@
+stages:
+  - deploy
+
+deploy_vercel_production:
+  image: node:22-alpine
+  stage: deploy
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+      when: on_success
+    - when: never
+  resource_group: vercel-production
+  interruptible: false
+  variables:
+    VERCEL_ORG_ID: team_xyHkkBKaAgXOAAVuhaP11d3F
+    VERCEL_PROJECT_ID: prj_KxpRvAINXsGT0E50DBxThpoJ4pPI
+  before_script:
+    - cd frontend
+    - npm install --global vercel@62.4.0
+  script:
+    - vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
+    - vercel build --prod --token="$VERCEL_TOKEN"
+    - vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN"
+  environment:
+    name: production
+    url: https://dashboard-rose-one-82.vercel.app
