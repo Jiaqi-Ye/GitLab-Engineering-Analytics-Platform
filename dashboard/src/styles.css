@@ -41,6 +41,7 @@ button { transition: background-color .15s ease, border-color .15s ease, transfo
 .brand { display: flex; align-items: center; gap: 10px; color: #2b2931; font-size: 20px; letter-spacing: -.45px; white-space: nowrap; }
 .brand:hover { text-decoration: none; }
 .brand strong { font-weight: 720; }
+.gitlab-mark { width: 32px; height: 32px; flex: 0 0 auto; }
 .team-mark { display: block; width: 34px; height: 34px; flex: 0 0 auto; border-radius: 50%; object-fit: contain; }
 .header-nav { display: none; align-items: center; gap: 22px; color: #5e5b63; font-size: 13px; }
 .header-nav a:hover { color: #17161b; }
@@ -165,7 +166,11 @@ tbody tr:hover { background: #fff9f6; }
   .search { width: 100%; }
 }
 @media (max-width: 480px) {
-  .team-mark { width: 31px; height: 31px; }
+  .topbar-content { gap: 12px; }
+  .brand { gap: 6px; font-size: 15px; }
+  .gitlab-mark { width: 27px; height: 27px; }
+  .team-mark { width: 28px; height: 28px; }
+  .header-nav { gap: 14px; font-size: 12px; }
   .page-heading { flex-direction: column; gap: 14px; }
   .refresh-button { margin: 0; }
   .metrics { gap: 9px; }
