@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import teamLogo from './logo.png';
 import { fetchAnalytics, webLink, type Analytics, type MergeRequest } from './api';
+import { AuthPage, type AuthMode } from './components/AuthPage';
+import { Brand } from './components/Brand';
 
 const numberFormat = new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 });
 const timestampFormat = new Intl.DateTimeFormat('en-US', {
@@ -24,14 +25,6 @@ function MergeIcon({ small = false }: { small?: boolean }) {
 function RefreshIcon() {
   return <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
     <path d="M20 10a8 8 0 1 0-1.5 7M20 4v6h-6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>;
-}
-
-function GitLabMark() {
-  return <svg className="gitlab-mark" viewBox="0 0 36 36" aria-hidden="true">
-    <path fill="#e24329" d="m18 32.1 6.6-20.3H11.4L18 32.1Z" />
-    <path fill="#fc6d26" d="m18 32.1-13-9.5 6.4-10.8L18 32.1Zm0 0 13-9.5-6.4-10.8L18 32.1Z" />
-    <path fill="#fca326" d="M5 22.6 2.8 16a1.1 1.1 0 0 1 0-.7L6.5 4.1c.2-.6 1-.6 1.2 0l3.7 7.7L5 22.6Zm26 0 2.2-6.6a1.1 1.1 0 0 0 0-.7L29.5 4.1c-.2-.6-1-.6-1.2 0l-3.7 7.7L31 22.6Z" />
   </svg>;
 }
 
@@ -128,7 +121,7 @@ function Dashboard({ data }: { data: Analytics }) {
   </>;
 }
 
-export default function App() {
+function AnalyticsApp() {
   const [data, setData] = useState<Analytics | null>(null);
   const [busy, setBusy] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -165,14 +158,11 @@ export default function App() {
     <a className="skip-link" href="#main">Skip to analytics</a>
     <header className="topbar">
       <div className="topbar-content">
-        <a className="brand" href="#overview" aria-label="Merge Analytics home">
-          <GitLabMark />
-          <img className="team-mark" src={teamLogo} alt="" />
-          <span>Merge <strong>Analytics</strong></span>
-        </a>
+        <Brand href="#overview" />
         <nav className="header-nav" aria-label="Primary navigation">
           <a href="#trends">Trends</a>
           <a href="#requests">Requests</a>
+          <a className="sign-in-link" href="#/login">Sign in</a>
         </nav>
       </div>
     </header>
@@ -194,4 +184,22 @@ export default function App() {
       </main>
     </div>
   </div>;
+}
+
+function routeFromHash(): AuthMode | 'dashboard' {
+  if (window.location.hash === '#/login') return 'login';
+  if (window.location.hash === '#/signup') return 'signup';
+  return 'dashboard';
+}
+
+export default function App() {
+  const [route, setRoute] = useState<AuthMode | 'dashboard'>(routeFromHash);
+
+  useEffect(() => {
+    const handleHashChange = () => setRoute(routeFromHash());
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  return route === 'dashboard' ? <AnalyticsApp /> : <AuthPage mode={route} />;
 }
