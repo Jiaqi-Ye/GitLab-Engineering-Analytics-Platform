@@ -201,5 +201,11 @@ export default function App() {
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
-  return route === 'dashboard' ? <AnalyticsApp /> : <AuthPage mode={route} />;
+  useEffect(() => {
+    document.title = route === 'login' ? 'Sign in · Merge Analytics'
+      : route === 'signup' ? 'Create account · Merge Analytics'
+        : 'Merge Analytics';
+  }, [route]);
+
+  return route === 'dashboard' ? <AnalyticsApp /> : <AuthPage key={route} mode={route} />;
 }

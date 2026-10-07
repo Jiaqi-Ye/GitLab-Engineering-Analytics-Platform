@@ -66,7 +66,7 @@ button { transition: background-color .15s ease, border-color .15s ease, transfo
 .auth-color-strip span:nth-child(3) { background: var(--yellow); }
 .auth-color-strip span:nth-child(4) { background: #8b72c5; }
 .auth-form-area { padding: 56px 32px; display: grid; place-items: center; background: #fff; }
-.auth-card { width: min(100%, 410px); }
+.auth-card { width: 100%; max-width: 410px; min-width: 0; }
 .auth-heading { margin-bottom: 30px; text-align: center; }
 .auth-heading h2 { color: #1f1e24; font-size: 30px; letter-spacing: -.8px; }
 .auth-heading p { margin-top: 9px; color: #706d75; font-size: 13px; }

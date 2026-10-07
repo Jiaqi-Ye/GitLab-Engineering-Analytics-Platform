@@ -68,12 +68,12 @@ export function AuthPage({ mode }: { mode: AuthMode }) {
             <p>{isSignup ? 'Start exploring your team’s delivery metrics.' : 'Sign in to continue to Merge Analytics.'}</p>
           </div>
 
-          <form className="auth-form" onSubmit={handleSubmit}>
+          <form className="auth-form" onSubmit={handleSubmit} aria-busy={busy}>
             {isSignup ? <label htmlFor="username">Username
-              <input id="username" name="username" type="text" autoComplete="username" minLength={3} maxLength={40} required placeholder="your-username" />
+              <input id="username" name="username" type="text" autoComplete="username" minLength={3} maxLength={40} required autoFocus placeholder="your-username" />
             </label> : null}
             <label htmlFor="email">Email address
-              <input id="email" name="email" type="email" autoComplete="email" required placeholder="you@example.com" />
+              <input id="email" name="email" type="email" autoComplete="email" required autoFocus={!isSignup} placeholder="you@example.com" />
             </label>
             <label htmlFor="password">Password
               <span className="password-field">
